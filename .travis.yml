@@ -1,0 +1,11 @@
+language: minimal
+service: docker
+install: 
+- docker-compose -f docker-compose-build.yaml build --parallel
+
+after_script:
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker image push "$DOCKER_USERNAME"/udacity-reverseproxy
+- docker image push "$DOCKER_USERNAME"/udacity-api-feed
+- docker image push "$DOCKER_USERNAME"/udacity-api-user
+- docker image push "$DOCKER_USERNAME"/udacity-frontend
